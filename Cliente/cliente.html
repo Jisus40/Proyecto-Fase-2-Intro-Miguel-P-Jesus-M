@@ -3,69 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Usuario - Catálogo</title>
+    <title>Cliente-Catálogo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="cliente.style.css">
 </head>
 <body>
     <header>
        <div class="usuar-icono">
-            <i class="fas fa-user-circle"></i>
+            <i class="fas fa-user-circle" title="Cliente26"></i>
         </div>
         <nav class="links">
             <a href="#"><i class="fas fa-house"></i> Inicio</a>
             <a href="#"><i class="fas fa-clock-rotate-left"></i> Historial</a>
         </nav>
-
-        <div class="user-actions">
-            <div class="cart-container">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count">0</span>
-            </div>
+        <div class="carrito">
+            <i class="fas fa-shopping-cart" title="Carrito"></i>
+            <span class="contador">0</span>
         </div>
     </header>
 
     <main class="container">
         <h2>Catálogo de Productos</h2>
         
-        <section class="catalog">
-            <div class="product-card">
-                <div class="product-image">
-                </div>
-                <div class="product-info">
-                    <div class="product-title">Producto Minimalista 01</div>
-                    <p class="product-desc">Descripción breve del producto resaltando sus características principales en tonos grises y negros.</p>
-                </div>
+        <section class="catalogo">
+            <div class="producto" id="pr1">
+                <div class="pr-img img1"></div>
+                <h2 class="pr-titulo">Empanadas</h2>
             </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                </div>
-                <div class="product-info">
-                    <div class="product-title">Producto Minimalista 02</div>
-                    <p class="product-desc">Diseño elegante pensado para usuarios que buscan simplicidad y funcionalidad en su día a día.</p>
-                </div>
+            <div class="producto">
+                <div class="pr-img img2"></div>
+                <h2 class="pr-titulo">Pan Relleno</h2>
             </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                </div>
-                <div class="product-info">
-                    <div class="product-title">Producto Minimalista 03</div>
-                    <p class="product-desc">Calidad premium con acabados en negro mate. Ideal para cualquier espacio de trabajo moderno.</p>
-                </div>
+            <div class="producto">
+                <div class="pr-img img3"></div>
+                <h2 class="pr-titulo">Tequeños</h2>
             </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                </div>
-                <div class="product-info">
-                    <div class="product-title">Producto Minimalista 04</div>
-                    <p class="product-desc">Una pieza esencial que combina perfectamente con nuestra línea de accesorios de cuero gris.</p>
-                </div>
+            <div class="producto">
+                <div class="pr-img img4"></div>
+                <h2 class="pr-titulo">Postre de fresas con crema</h2>
+            </div>
+            <div class="producto">
+                <div class="pr-img img5"></div>
+                <h2 class="pr-titulo">Salchipapas</h2>
+            </div>
+            <div class="producto">
+                <div class="pr-img img6"></div>
+                <h2 class="pr-titulo">Sandwich</h2>
+            </div>
+            <div class="producto">
+                <div class="pr-img img7"></div>
+                <h2 class="pr-titulo">Hamburguesa</h2>
+            </div>
+            <div class="producto">
+                <div class="pr-img img8"></div>
+                <h2 class="pr-titulo">Postre de mandarinas con crema</h2>
+            </div>
+            <div class="producto">
+                <div class="pr-img img9"></div>
+                <h2 class="pr-titulo">Pizza</h2>
+            </div>
+            <div class="producto">
+                <div class="pr-img img10"></div>
+                <h2 class="pr-titulo">Pollo frito</h2>
             </div>
         </section>
     </main>
-
+<script src="cliente.script.js"></script>
 </body>
 </html>

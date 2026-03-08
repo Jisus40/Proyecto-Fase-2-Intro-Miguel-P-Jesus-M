@@ -39,18 +39,13 @@ header {
     color: #888;
 }
 
-.user-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.cart-container {
+.carrito {
     position: relative;
     cursor: pointer;
+    font-size: 1.4rem;
 }
 
-.cart-count {
+.contador {
     background-color: #000;
     color: #fff;
     font-size: 10px;
@@ -62,14 +57,15 @@ header {
 }
 
 .usuar-icono {
-    font-size: 1.2rem;
+    font-size: 2rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .container {
     margin: 2rem auto;
     padding: 0 20px;
-    border: 2px solid red;
 }
 
 h2 {
@@ -78,17 +74,16 @@ h2 {
     text-align: center;
 }
 
-.catalog {
+.catalogo {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     gap: 20px;
     width: 100%;
-    border: 2px solid red;
     padding: 30px;
 }
 
-.product-card {
+.producto {
     background-color: #fff;
     border: 1px solid #eee;
     border-radius: 8px;
@@ -96,42 +91,103 @@ h2 {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.product-card:hover {
+.producto:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-.product-image {
+.pr-img {
     width: 100%;
     height: 250px;
     background-color: #eaeaea; 
     color: #bbb;
+    border-radius: 8px;
 }
 
-.product-info {
+.pr-titulo {
     text-align: center;
     padding: 1.5rem;
-}
-
-.product-title {
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     margin-bottom: 0.5rem;
 }
 
-.product-desc {
-    font-size: 0.9rem;
-    color: #666;
-    line-height: 1.4;
+.img1{
+    background-image: url("imagenes/empanadas.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
-        /* Responsivo para móviles */
+.img2{
+    background-image: url("imagenes/pan%20relleno.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.img3{
+    background-image: url("imagenes/teque%C3%B1os.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.img4{
+    background-image: url("imagenes/postre%20de%20fresas%20con%20crema.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.img5{
+    background-image: url("imagenes/salchipapas.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.img6{
+    background-image: url("imagenes/sandwich.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.img7{
+    background-image: url("imagenes/hamburguesas.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.img8{
+    background-image: url("imagenes/postre%20de%20mandarinas%20con%20crema.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.img9{
+    background-image: url("imagenes/pizza.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.img10{
+    background-image: url("imagenes/pollo%20frito.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
 @media (max-width: 600px) {
-    .catalog {
+    .catalogo {
          flex-direction: column;   
     }
     
-    .product-card{
+    .producto{
         width: 100%;
     }
 }
