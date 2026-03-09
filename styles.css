@@ -9,7 +9,7 @@ body {
 
 .Hero{
 	height: 80vh;
-	background-image: url("fondo.jpg");
+	background-image: url("imagenes/fondo.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -92,8 +92,13 @@ input {
 	margin-top: 30px;
 }
 
-.producto:hover{
-    padding: 10px;
+.producto, .reseña {
+    transition: transform 0.3s ease;
+}
+
+.producto:hover, .reseña:hover {
+    transform: scale(1.02);
+    padding: 0;
 }
 
 .producto p {
@@ -113,7 +118,7 @@ input {
 }
 
 .img1{
-	background-image: url("https://www.burgerfi.com/wp-content/uploads/2025/01/Burgerfi-burger-with-fries-and-soda.webp");
+	background-image: url("imagenes/hamburguesa.png");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
@@ -122,7 +127,7 @@ input {
 }
 
 .img2{
-	background-image: url("https://www.elespectador.com/resizer/-V8Vt7vSho4xhtWnDewlnsDbZDU=/arc-anglerfish-arc2-prod-elespectador/public/2EFJ2P7JPVGURJLT7QLCSD6P74.png");
+	background-image: url("imagenes/empanadas.jpg");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
@@ -131,7 +136,7 @@ input {
 }
 
 .img3{
-	background-image: url("https://tropimarkt.com/cdn/shop/articles/tequenos_tropimarkt.png?v=1674937147");
+	background-image: url("imagenes/teque%C3%B1os.jpg");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
@@ -140,7 +145,7 @@ input {
 }
 
 .img4{
-	background-image: url("https://i.pinimg.com/736x/6b/01/6e/6b016ed0fc20f3c8dacdc3f804f98456.jpg");
+	background-image: url("imagenes/sanwdich.jpg");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
@@ -149,7 +154,7 @@ input {
 }
 
 .img5{
-	background-image: url("https://imag.bonviveur.com/emplatado-final-de-las-salchipapas.jpg");
+	background-image: url("imagenes/salchipapas.jpg");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
@@ -176,10 +181,6 @@ input {
 	border: 4px black solid;
 	border-radius: 10px;
 	font-size: 1.2rem;
-}
-
-.reseña:hover{
-    padding: 10px;
 }
 
 footer {

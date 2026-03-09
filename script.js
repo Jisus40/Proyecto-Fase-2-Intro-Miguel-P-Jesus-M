@@ -5,16 +5,17 @@ let entrar = document.getElementById("entrar");
 let usuario = document.getElementById("usuario");
 let contraseña = document.getElementById("contraseña");
 
-iniciarSesion.onclick = function(){
-	mostrar.style.display = "flex";
-	formulario.style.display = "flex";
-};
+iniciarSesion.addEventListener('click', () => {
+    mostrar.style.display = "flex";
+    formulario.style.display = "flex";
+    mostrar.scrollIntoView({ behavior: 'smooth' });
+});
 
 entrar.onclick = function(event){
     event.preventDefault();
-    if(usuario.value == "Cliente26" && contraseña.value == 123456789){
+    if(usuario.value == "ClienteUCV" && contraseña.value == "Central_123"){
         window.location.href = "Cliente/cliente.html";
-    }else if(usuario.value == "Admin" && contraseña.value == "2589vml12"){
+    }else if(usuario.value == "adminRoot" && contraseña.value == "cafetinAdmin"){
         alert("funciono");
         window.location.href = "Administrador/admin.html";
     }
@@ -24,7 +25,7 @@ entrar.onclick = function(event){
     }else if(usuario.value == "Cocinero45" && contraseña.value == "coci1397"){
         alert("funciono");
         window.location.href = "Cocina/cocina.html";
-    }else if(usuario.value == "Cajero11" && contraseña.value == "Caj2956"){
+    }else if(usuario.value == "caja_01" && contraseña.value == "Cajero#123"){
         alert("funciono");
         window.location.href = "Cajero/cajero.html";
     }else{
