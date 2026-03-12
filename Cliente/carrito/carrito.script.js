@@ -193,3 +193,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderizarCarrito();
 });
+
+document.getElementById("cerrarSesion").onclick = () => {
+    // Quitamos la llave pero NO borramos historial ni puntos
+    localStorage.removeItem("sesionActiva");
+    
+    alert("Sesión cerrada. ¡Vuelva pronto!");
+    window.location.href = "../index.html";
+};

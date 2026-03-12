@@ -8,124 +8,103 @@
 })();
 
 document.addEventListener("DOMContentLoaded", () => {
-    // --- 1. EL GUARDIÁN: VERIFICAR ACCESO ---
+    // El Guardián
     if (localStorage.getItem("sesionActiva") !== "true") {
         window.location.href = "../index.html";
         return;
     }
 
     cargarPedidos();
-
-    // Opcional: Refrescar automáticamente cada 10 segundos para ver pedidos nuevos
-    setInterval(cargarPedidos, 10000);
 });
 
-// --- 2. CARGAR PEDIDOS DESDE EL LOCALSTORAGE ---
 function cargarPedidos() {
     const contenedor = document.getElementById("lista-pedidos-caja");
     const datosRaw = localStorage.getItem("pedidosPendientes") || "";
 
     if (datosRaw === "") {
-        contenedor.innerHTML = `
-            <div class="vacio-msg" style="text-align:center; padding:50px; color:#999;">
-                <h2>No hay pedidos pendientes</h2>
-                <p>La cola de atención está vacía en este momento.</p>
-            </div>`;
+        contenedor.innerHTML = "<div class='vacio-msg'><h2>No hay pedidos pendientes</h2></div>";
         return;
     }
 
-    contenedor.innerHTML = ""; // Limpiar antes de renderizar
-    let pedidos = datosRaw.split("%%");
+    contenedor.innerHTML = "";
+    let bloques = datosRaw.split("%%");
 
-    pedidos.forEach((pedido, index) => {
-        // Estructura recibida: NombreCliente | Producto1;Producto2;... | Total
-        let partes = pedido.split("|");
-        if (partes.length < 3) return;
+    bloques.forEach((bloque, index) => {
+        // --- CIRUGÍA LÁSER DE DATOS ---
+        const primerPipe = bloque.indexOf("|");
+        const ultimoPipe = bloque.lastIndexOf("|");
 
-        let nombre = partes[0];
-        let productosRaw = partes[1]; 
-        let total = partes[2];
+        // El nombre es todo lo que está antes del primer |
+        const nombreCliente = bloque.substring(0, primerPipe);
+        // El total es todo lo que está después del último |
+        const totalPago = bloque.substring(ultimoPipe + 1);
+        // Los productos son todo lo que está en el MEDIO
+        const cuerpoProductos = bloque.substring(primerPipe + 1, ultimoPipe);
 
-        // Separamos los productos por el punto y coma para mostrarlos en lista
-        let arrayProductos = productosRaw.split(";");
-        let listaHTML = "<ul style='list-style:none; padding:0; margin:10px 0;'>";
-        
-        arrayProductos.forEach(p => {
-            if(p.trim() !== "") {
-                listaHTML += `<li style="padding:5px 0; border-bottom:1px solid #f0f0f0;">• ${p}</li>`;
+        let divPedido = document.createElement("div");
+        divPedido.className = "bloque-compra";
+        divPedido.style = "border: 2px solid #000; padding: 20px; margin-bottom: 25px; background: #fff; box-shadow: 10px 10px 0px #000;";
+
+        // Procesamos la lista de productos (separados por ";" según tu carrito)
+        let listaHTML = "<ul style='padding: 0; list-style: none;'>";
+        let productosArray = cuerpoProductos.split(";");
+
+        productosArray.forEach(prod => {
+            let d = prod.split("|");
+            // Filtramos por si acaso hay espacios vacíos
+            if (d.length >= 2) {
+                // d[0]=Nombre, d[1]=Cant, d[2]=Precio
+                listaHTML += `
+                <li style="font-size: 1.2rem; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                    <strong>${d[0].trim()}</strong> — Cant: ${d[1]} — Subtotal: ${d[2]}$
+                </li>`;
             }
         });
         listaHTML += "</ul>";
 
-        let card = document.createElement("div");
-        card.className = "bloque-compra";
-        card.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <h3 style="margin:0;">Cliente: ${nombre}</h3>
-                <span style="font-size:0.8rem; color:#666;">Orden #${index + 1}</span>
+        divPedido.innerHTML = `
+            <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px;">
+                <h3 style="margin: 0;">CLIENTE: ${nombreCliente}</h3>
+                <span style="font-weight: bold;">ORDEN #${index + 1}</span>
             </div>
-            
-            <div class="detalle-productos" style="background:#fcfcfc; padding:15px; border-radius:8px; margin:15px 0;">
-                ${listaHTML}
+            ${listaHTML}
+            <div style="text-align: right; margin-top: 15px;">
+                <p style="font-size: 1.8rem; margin: 0;">TOTAL: <strong>${totalPago}$</strong></p>
             </div>
-            
-            <div class="total-caja" style="font-size:1.4rem; margin-bottom:20px;">
-                Total a pagar: <strong style="color:#000;">$${parseFloat(total).toFixed(2)}</strong>
-            </div>
-            
-            <button class="btn-puntos" onclick="finalizarVenta(${index})" style="width:100%; padding:15px; cursor:pointer; background:#000; color:#fff; border:none; border-radius:8px; font-weight:bold; text-transform:uppercase;">
-                Confirmar Venta y Generar Factura
+            <button onclick="finalizarVenta(${index})" style="width: 100%; background: #000; color: #fff; border: none; padding: 15px; font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 1.1rem;">
+                CONFIRMAR VENTA
             </button>
         `;
-        contenedor.appendChild(card);
+        contenedor.appendChild(divPedido);
     });
 }
 
-// --- 3. FINALIZAR VENTA Y MOVER A FACTURACIÓN ---
 function finalizarVenta(index) {
     let datosRaw = localStorage.getItem("pedidosPendientes") || "";
     let pedidos = datosRaw.split("%%");
-    
-    // Obtenemos el pedido específico
-    let pedidoSeleccionado = pedidos[index];
-    
-    // 1. Añadimos la fecha y hora actual al pedido para la factura
+    let pedidoFinalizado = pedidos[index];
+
     let ahora = new Date();
-    let fechaFormateada = ahora.toLocaleDateString() + " " + ahora.toLocaleTimeString();
-    
-    // El nuevo formato para Facturas será: Nombre|Productos|Total|Fecha
-    let facturaFinal = `${pedidoSeleccionado}|${fechaFormateada}`;
+    let fecha = ahora.toLocaleDateString() + " " + ahora.toLocaleTimeString();
 
-    // 2. Guardamos en el historial de Facturas (recibosData)
-    let facturasPrevias = localStorage.getItem("recibosData") || "";
-    let listaActualizadaFacturas = (facturasPrevias === "") 
-        ? facturaFinal 
-        : facturaFinal + "%%" + facturasPrevias;
+    // Guardamos en facturas: DatosDelPedido | Fecha
+    let recibosPrevios = localStorage.getItem("recibosData") || "";
+    let nuevoRecibo = `${pedidoFinalizado}|${fecha}`;
     
-    localStorage.setItem("recibosData", listaActualizadaFacturas);
+    let dataFinal = (recibosPrevios === "") ? nuevoRecibo : nuevoRecibo + "%%" + recibosPrevios;
+    localStorage.setItem("recibosData", dataFinal);
 
-    // 3. Eliminamos el pedido de la cola de pendientes
+    // Borrar de pendientes
     pedidos.splice(index, 1);
-    
     if (pedidos.length > 0) {
         localStorage.setItem("pedidosPendientes", pedidos.join("%%"));
     } else {
         localStorage.removeItem("pedidosPendientes");
     }
 
-    // 4. Notificación y Recarga
-    alert("¡Venta Exitosa! La factura ha sido registrada en el historial.");
+    alert("Venta finalizada con éxito.");
     cargarPedidos();
 }
-
-// Función de utilidad para limpiar la cola manualmente si es necesario
-function limpiarColaPedidos() {
-    if(confirm("¿Deseas limpiar toda la cola de pedidos pendientes?")) {
-        localStorage.removeItem("pedidosPendientes");
-        cargarPedidos();
-    }
-}
-
 document.getElementById("cerrarSesion").onclick = () => {
     // Quitamos la llave pero NO borramos historial ni puntos
     localStorage.removeItem("sesionActiva");

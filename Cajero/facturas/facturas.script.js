@@ -1,97 +1,59 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // --- 1. EL GUARDIÁN: VERIFICAR ACCESO ---
-    const acceso = localStorage.getItem("sesionActiva");
-    if (acceso !== "true") {
-        alert("Acceso denegado. Por favor, inicie sesión.");
-        window.location.href = "../index.html";
-        return;
-    }
-
-    renderizarFacturas();
-});
-
-function renderizarFacturas() {
     const contenedor = document.getElementById("lista-facturas-finales");
-    const dataVentas = localStorage.getItem("recibosData") || "";
+    const rawData = localStorage.getItem("recibosData") || "";
 
-    // Si no hay ventas, mostramos un mensaje amigable
-    if (dataVentas === "") {
-        contenedor.innerHTML = `
-            <div style="text-align:center; margin-top:100px; color:#999;">
-                <p style="font-size: 1.5rem;">No hay registros de facturación para el periodo actual.</p>
-                <p>Las facturas aparecerán aquí una vez que el cajero procese las ventas.</p>
-            </div>`;
+    if (rawData === "") {
+        contenedor.innerHTML = "<p style='text-align:center; font-size: 1.2rem; margin-top: 50px;'>No hay facturas emitidas hoy.</p>";
         return;
     }
 
-    // El cajero guarda los bloques de venta separados por "%%"
-    let facturas = dataVentas.split("%%");
-    contenedor.innerHTML = ""; // Limpiamos el contenedor antes de renderizar
+    let facturas = rawData.split("%%");
+    contenedor.innerHTML = "";
 
-    let acumuladoDelDia = 0;
+    facturas.forEach(f => {
+        // En facturas el formato es: DatosDelPedido | Fecha
+        // El pedido en sí tiene: Nombre | Productos | Total
+        const ultimoPipeFactura = f.lastIndexOf("|");
+        const fecha = f.substring(ultimoPipeFactura + 1);
+        const cuerpoPedido = f.substring(0, ultimoPipeFactura);
 
-    facturas.forEach((f) => {
-        // Estructura esperada: NombreCliente | Producto1;Producto2;... | Total | FechaHora
-        let [nombre, productosRaw, total, fecha] = f.split("|");
+        // Ahora desglosamos el cuerpo del pedido
+        const primerPipe = cuerpoPedido.indexOf("|");
+        const ultimoPipe = cuerpoPedido.lastIndexOf("|");
 
-        // Sumamos al total del día para el reporte interno
-        acumuladoDelDia += parseFloat(total);
+        const nombre = cuerpoPedido.substring(0, primerPipe);
+        const total = cuerpoPedido.substring(ultimoPipe + 1);
+        const productosRaw = cuerpoPedido.substring(primerPipe + 1, ultimoPipe);
 
-        // Creamos el bloque de la factura
         let card = document.createElement("div");
         card.className = "factura-bloque";
 
-        // --- PROCESAMIENTO DE LA LISTA DE PRODUCTOS ---
-        // Separamos los productos individuales que el cajero unió con ";"
-        let listaItems = productosRaw.split(";");
-        let htmlProductos = "<ul style='list-style: none; padding: 0;'>";
-        
-        listaItems.forEach(item => {
-            if(item.trim() !== "") {
-                htmlProductos += `
-                    <li style="border-bottom: 1px solid #f0f0f0; padding: 8px 0;">
-                        ${item}
-                    </li>`;
+        let listaHTML = "";
+        let productos = productosRaw.split(";");
+        productos.forEach(p => {
+            let d = p.split("|");
+            if (d.length >= 2) {
+                listaHTML += `
+                <li style="display: flex; justify-content: space-between; font-size: 1.3rem; padding: 10px 0; border-bottom: 1px dashed #ccc;">
+                    <span>${d[0].trim()} (x${d[1]})</span>
+                    <span>${d[2]}$</span>
+                </li>`;
             }
         });
-        htmlProductos += "</ul>";
 
-        // Inyectamos el contenido en la tarjeta
         card.innerHTML = `
             <div class="etiqueta-finalizado">COMPRA FINALIZADA</div>
-            
             <div class="cliente-info">
-                <h2 style="text-transform: uppercase; letter-spacing: 1px;">${nombre}</h2>
-                <div class="fecha-emision">Registro N°: ${Math.floor(Math.random() * 10000)} | ${fecha}</div>
+                <h2 style="font-size: 2.2rem; margin-bottom: 5px;">${nombre}</h2>
+                <p style="color: #666; font-size: 1.1rem;">Emitido el: ${fecha}</p>
             </div>
-
-            <div class="lista-productos">
-                <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px; text-transform: uppercase; font-weight: bold;">Descripción de Productos:</p>
-                ${htmlProductos}
-            </div>
-
+            <ul style="list-style: none; padding: 0; margin: 30px 0;">
+                ${listaHTML}
+            </ul>
             <div class="total-final">
-                <span>TOTAL PAGADO EN CAJA:</span> $${parseFloat(total).toFixed(2)}
-            </div>
-
-            <div style="margin-top: 20px; text-align: left;">
-                <button onclick="window.print()" class="btn-print" style="cursor:pointer; background:none; border:1px solid #ccc; padding:5px 10px; border-radius:5px; font-size:0.8rem;">
-                    🖨️ Imprimir Copia
-                </button>
+                <span>TOTAL PAGADO:</span> ${total}$
             </div>
         `;
-        
         contenedor.appendChild(card);
     });
-
-    // Opcional: Mostrar un resumen al final de la página (Solo visible para el administrador)
-    console.log(`--- CIERRE DE CAJA --- \n Total en Ventas: $${acumuladoDelDia.toFixed(2)}`);
-}
-
-// Función extra por si quieres un botón para limpiar el historial (Cierre de día)
-function cerrarCajaDelDia() {
-    if (confirm("¿Está seguro de que desea cerrar la caja? Se borrarán todas las facturas del listado actual.")) {
-        localStorage.removeItem("recibosData");
-        location.reload();
-    }
-}
+});
