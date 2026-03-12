@@ -1,0 +1,72 @@
+:root {
+    --primary: #1a1a1a;
+    --danger: #e74c3c;
+    --success: #2ecc71;
+    --bg: #f4f7f6;
+}
+
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; }
+
+.admin-header {
+    background: var(--primary);
+    color: white;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-regresar {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 5px;
+}
+
+.container { max-width: 800px; margin: 30px auto; padding: 20px; }
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.btn-bloquear {
+    padding: 10px 20px;
+    background: var(--danger);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.btn-desbloquear {
+    background: var(--success);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}

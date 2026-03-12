@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestionar Menú | Admin</title>
+    <link rel="stylesheet" href="gestionar-menu.style.css">
+</head>
+<body>
+    <header class="admin-header">
+    <div class="header-izq">
+        <a href="../admin.html" class="btn-regresar">
+            <i class="fas fa-chevron-left"></i> Volver al Panel
+        </a>
+    </div>
+    <div class="header-centro">
+        <h1>Gestión del Menú</h1>
+    </div>
+    <div class="header-der">
+        </div>
+</header>
+
+   <main class="contenedor-admin">
+    <section class="seccion-form">
+        <h3>Añadir Nuevo Producto</h3>
+        <form id="form-nuevo-producto" class="grid-input">
+            <input type="text" id="prod-id" placeholder="ID (ej: pr11)" required>
+            <input type="text" id="prod-nombre" placeholder="Nombre del plato" required>
+            <input type="text" id="prod-img" placeholder="Clase CSS (img1) o Link URL" required>
+            <button type="submit" class="btn-guardar">Agregar al Menú</button>
+        </form>
+    </section>
+
+    <section class="seccion-tabla">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Producto</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody id="lista-gestion-productos"></tbody>
+        </table>
+    </section>
+</main>
+   
+    <script src="gestionar-menu.script.js"></script>
+</body>
+</html>

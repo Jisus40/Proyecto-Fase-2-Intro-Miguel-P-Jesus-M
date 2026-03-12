@@ -1,0 +1,102 @@
+:root {
+    --bg-color: #f4f7f6;
+    --primary: #2c3e50;
+    --accent: #3498db;
+    --white: #ffffff;
+    --text: #333;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    margin: 0;
+    color: var(--text);
+}
+
+/* Header */
+.admin-header {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo h1 span {
+    color: var(--accent);
+}
+
+.btn-logout {
+    background-color: transparent;
+    border: 2px solid var(--white);
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: var(--white);
+    color: var(--primary);
+}
+
+/* Contenido Principal */
+.contenedor-admin {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.bienvenida {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* Grid de Menú */
+.menu-flex {
+    display: flex;
+    flex-wrap: wrap;         /* Permite que las tarjetas bajen si no caben */
+    justify-content: center; /* Centra las tarjetas si sobra espacio */
+    gap: 25px;               /* Espacio entre tarjetas */
+}
+
+.card-admin {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #eee;
+
+    /* Propiedades Flex para las tarjetas */
+    flex: 1 1 250px; /* Crece, se encoge y tiene un tamaño base de 250px */
+    max-width: 400px; /* Evita que las tarjetas se estiren demasiado en pantallas gigantes */
+}
+
+.card-admin:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border-color: var(--accent);
+}
+
+.card-admin .icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.card-admin h3 {
+    margin: 10px 0;
+    color: var(--primary);
+}
+
+.card-admin p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+}
